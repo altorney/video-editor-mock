@@ -2,23 +2,32 @@
   width: calc(100vw - 17px);
   height: 200px;
   border: 1px solid red;
-  overflow: hidden;
+  overflow: auto;
   display: flex;
+  width: 2000px;
+  user-select: none; /* Standard syntax */
 }
 
 .video {
   border: 1px solid green;
   min-width: 150px;
+  display: flex;
+  /* flex-grow: 1; */
+  user-select: none;
 }
+
 .video-spacer {
   border: 1px solid orange;
   min-width: 15px;
+  width: 15px;
+  user-select: none; /* Standard syntax */
 }
 
 .selected {
   background-color: aqua;
 }
 
-div {
+.cursor-ew {
   cursor: ew-resize;
+  /* border-right-color: blue; */
 }
