@@ -1,11 +1,7 @@
-import { useState, useRef } from "react";
+import { useState, useRef, memo } from "react";
 import "./App.css";
 
-interface ChildProps {
-  id: string;
-}
-
-const videoSpacer = ({ id }: ChildProps) => {
+const VideoSpacer = () => {
   const [ewCursor, setEwCursor] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const videoRef = useRef<HTMLDivElement>(null);
@@ -31,7 +27,6 @@ const videoSpacer = ({ id }: ChildProps) => {
   };
 
   const classNames = `video-spacer ${ewCursor ? "cursor-ew" : ""}`;
-  console.log("render" + id);
   return (
     <div
       ref={videoRef}
@@ -39,10 +34,8 @@ const videoSpacer = ({ id }: ChildProps) => {
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
-    >
-      {id}
-    </div>
+    ></div>
   );
 };
 
-export default videoSpacer;
+export const MemoizedVideoSpacer = memo(VideoSpacer);
