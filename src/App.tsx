@@ -2,10 +2,10 @@ import { useState, useEffect, Fragment } from "react";
 import "./App.css";
 import { MemoizedVideoSpacer } from "./videoSpacer";
 const dataInital = [
-  { id: 1, name: "John1" },
-  { id: 2, name: "Jane" },
-  { id: 3, name: "Bob" },
-  { id: 4, name: "Bob2" },
+  { id: 1, name: "video 1" },
+  { id: 2, name: "video 2" },
+  { id: 3, name: "video 3" },
+  { id: 4, name: "video 4" },
 ];
 interface Item {
   id: number;
@@ -56,7 +56,15 @@ const App = () => {
     </Fragment>
   ));
 
-  return <div className="container">{items}</div>;
+  return (
+    <>
+      <div className="container">{items}</div> <br />
+      <p>Click on a video and then the delete key to remove a video</p>
+      <p>
+        hover over the right border of a spacer; mouse press and drag to resize
+      </p>
+    </>
+  );
 };
 
 export default App;
