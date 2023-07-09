@@ -1,40 +1,62 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import { useState, useEffect, Fragment } from "react";
 import "./App.css";
-
-function App() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <div className="App">
-      <div>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-      </div>
-      <h1>React + Vite update</h1>
-      <h2>On CodeSandbox!</h2>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR.
-        </p>
-
-        <p>
-          Tip: you can use the inspector button next to address bar to click on
-          components in the preview and open the code in the editor!
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  );
+import { MemoizedVideoSpacer } from "./videoSpacer";
+const dataInital = [
+  { id: 1, name: "John1" },
+  { id: 2, name: "Jane" },
+  { id: 3, name: "Bob" },
+  { id: 4, name: "Bob2" },
+];
+interface Item {
+  id: number;
+  name: string;
 }
+
+const App = () => {
+  const [selected, setSelected] = useState<number | null>(null);
+  const [data, setData] = useState<Array<Item>>(dataInital);
+
+  const handleDelete = (index: number) => {
+    const newData = data.filter((item, i) => i !== index);
+    setData(newData);
+  };
+
+  const handleClick = (index: number) => {
+    if (!selected) {
+      setSelected(index);
+    } else {
+      setSelected(null);
+    }
+  };
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Delete" && selected !== null) {
+        handleDelete(selected);
+        setSelected(null);
+      }
+    };
+
+    document.body.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleDelete]);
+
+  const items = data.map((item, index) => (
+    <Fragment key={item.id + "fragment"}>
+      <MemoizedVideoSpacer key={item.id + "spacer"} />
+      <div
+        className={index === selected ? "video selected" : "video"}
+        key={item.id}
+        onClick={() => handleClick(index)}
+      >
+        {item.name}
+      </div>
+    </Fragment>
+  ));
+
+  return <div className="container">{items}</div>;
+};
 
 export default App;
